@@ -36,7 +36,13 @@ jobs:
       - run: sqlc -f sqlc.dev.yaml diff
         working-directory: examples
       - uses: actions/configure-pages@v5
-      - run: sha256sum examples/plugin.wasm > examples/checksum.txt
+      - run: |
+          echo "<h1>sqlc-gen-typescript</h1>" > index.html
+          echo "<p>sha256: " >> index.html
+          sha256sum plugin.wasm >> index.html
+          echo "</p>" >> index.html
+          echo "<p>https://tsukinoko-kun.github.io/sqlc-gen-typescript/plugin.wasm</p>" >> index.html
+        working-directory: examples
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./examples
